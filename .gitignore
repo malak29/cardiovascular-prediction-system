@@ -1,0 +1,291 @@
+# =================================
+# CARDIOVASCULAR PREDICTION SYSTEM
+# Git Ignore Patterns
+# =================================
+
+# Environment Variables
+.env
+.env.local
+.env.production
+.env.development
+.env.staging
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual Environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+cardiovascular-env/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*.ipynb
+
+# ML Models & Data
+/data/raw/*.csv
+/data/processed/*.csv
+/data/processed/*.parquet
+/backend/ml_models/*.pkl
+/backend/ml_models/*.joblib
+/backend/ml_models/*.h5
+/backend/ml_models/checkpoints/
+*.model
+*.weights
+*.hdf5
+
+# Temporary ML Files
+mlruns/
+.mlflow/
+wandb/
+tensorboard_logs/
+experiments/
+
+# Node.js & Frontend
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+package-lock.json
+yarn.lock
+
+# React Build
+/frontend/build/
+/frontend/dist/
+.cache/
+.parcel-cache/
+
+# Testing
+coverage/
+*.coverage
+.nyc_output
+.coverage.*
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.metadata
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/backend/logs/
+/frontend/logs/
+*.log.*
+log_*.txt
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+.docker/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+/postgres-data/
+/pgdata/
+
+# Temporary Files
+tmp/
+temp/
+.tmp/
+.temp/
+*.tmp
+*.temp
+
+# Backup Files
+*.bak
+*.backup
+*.old
+backup_*/
+backups/
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+Thumbs.db
+
+# SSL Certificates
+*.pem
+*.key
+*.crt
+*.csr
+ssl/
+certificates/
+
+# Kubernetes Secrets
+k8s-secrets.yaml
+*.secret.yaml
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+terraform.tfvars
+
+# AWS
+.aws/
+
+# Monitoring & Observability
+prometheus_data/
+grafana_data/
+elasticsearch_data/
+/monitoring/data/
+
+# Documentation Build
+docs/_build/
+docs/build/
+site/
+.sphinx_build/
+
+# API Documentation
+api_docs/
+swagger.json
+openapi.json
+
+# Security Files
+secrets.json
+private_keys/
+*.p12
+*.keystore
+
+# Local Development
+local_settings.py
+local_config.json
+dev_data/
+test_uploads/
+
+# Editor Specific
+*.swp
+*.swo
+.ropeproject/
+.spyderproject
+.spyproject
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre
+.pyre/
+
+# pytype
+.pytype/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath
+*.sage.py
+
+# Rope
+.ropeproject
+
+# mkdocs
+/site
+
+# Sphinx
+docs/_build
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pipenv
+Pipfile.lock
+
+# Poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Static Files (if using whitenoise or similar)
+staticfiles/
+static_collected/
+
+# Media Files (user uploads)
+media/
+uploads/
+
+# Custom Application Specific
+/data/external/
+/results/
+/reports/
+/models/archive/
+experimental/

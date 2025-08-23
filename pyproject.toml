@@ -1,0 +1,302 @@
+[build-system]
+requires = ["setuptools>=65", "wheel", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cardiovascular-prediction-system"
+version = "1.0.0"
+description = "Production-ready ML system for predicting cardiovascular disease hospitalization rates"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Your Organization", email = "engineering@yourorg.com"}
+]
+maintainers = [
+    {name = "ML Engineering Team", email = "ml-eng@yourorg.com"}
+]
+keywords = ["healthcare", "machine-learning", "cardiovascular", "prediction", "fastapi"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Healthcare Industry",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Framework :: FastAPI",
+]
+requires-python = ">=3.11"
+dependencies = [
+    # Web Framework
+    "fastapi[all]>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "gunicorn>=21.2.0",
+    
+    # Database & ORM
+    "sqlalchemy[asyncio]>=2.0.23",
+    "alembic>=1.12.1",
+    "asyncpg>=0.29.0",
+    "psycopg2-binary>=2.9.9",
+    
+    # Caching & Session
+    "redis>=5.0.1",
+    "hiredis>=2.2.3",
+    
+    # Data Processing & ML
+    "pandas>=2.1.3",
+    "numpy>=1.25.2",
+    "scikit-learn>=1.3.2",
+    "scipy>=1.11.4",
+    "joblib>=1.3.2",
+    "xgboost>=2.0.2",
+    "lightgbm>=4.1.0",
+    
+    # Data Validation
+    "pydantic[email]>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    
+    # HTTP Requests
+    "httpx>=0.25.2",
+    "aiohttp>=3.9.1",
+    
+    # Authentication & Security
+    "python-jose[cryptography]>=3.3.0",
+    "passlib[bcrypt]>=1.7.4",
+    "python-multipart>=0.0.6",
+    
+    # Monitoring & Observability
+    "prometheus-client>=0.19.0",
+    "sentry-sdk[fastapi]>=1.38.0",
+    
+    # Configuration & Environment
+    "python-dotenv>=1.0.0",
+    "pyyaml>=6.0.1",
+    
+    # Utilities
+    "python-dateutil>=2.8.2",
+    "pytz>=2023.3",
+    "click>=8.1.7",
+    
+    # Logging
+    "structlog>=23.2.0",
+    "colorama>=0.4.6",
+    
+    # File Processing
+    "openpyxl>=3.1.2",
+    "xlsxwriter>=3.1.9",
+]
+
+[project.optional-dependencies]
+dev = [
+    # Testing
+    "pytest>=7.4.3",
+    "pytest-asyncio>=0.21.1",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.12.0",
+    "pytest-xdist>=3.5.0",
+    "httpx>=0.25.2",
+    "factory-boy>=3.3.0",
+    
+    # Code Quality
+    "black>=23.11.0",
+    "isort>=5.12.0",
+    "flake8>=6.1.0",
+    "mypy>=1.7.1",
+    "bandit>=1.7.5",
+    "safety>=2.3.5",
+    "pre-commit>=3.6.0",
+    
+    # Development Tools
+    "ipython>=8.17.2",
+    "jupyter>=1.0.0",
+    "notebook>=7.0.6",
+    
+    # API Documentation
+    "mkdocs>=1.5.3",
+    "mkdocs-material>=9.4.8",
+    "mkdocstrings[python]>=0.24.0",
+]
+
+production = [
+    # Production WSGI Server
+    "gunicorn>=21.2.0",
+    
+    # Production Monitoring
+    "newrelic>=9.2.0",
+    "datadog>=0.47.0",
+    
+    # Production Security
+    "cryptography>=41.0.7",
+]
+
+ml = [
+    # Advanced ML Libraries
+    "tensorflow>=2.15.0",
+    "torch>=2.1.1",
+    "transformers>=4.35.2",
+    
+    # ML Experiment Tracking
+    "mlflow>=2.8.1",
+    "wandb>=0.16.0",
+    
+    # Feature Engineering
+    "feature-engine>=1.6.2",
+    "imbalanced-learn>=0.11.0",
+    
+    # Model Interpretation
+    "shap>=0.43.0",
+    "lime>=0.2.0.1",
+    "eli5>=0.13.0",
+    
+    # Hyperparameter Optimization
+    "optuna>=3.4.0",
+    "hyperopt>=0.2.7",
+]
+
+[project.urls]
+homepage = "https://github.com/yourorg/cardiovascular-prediction-system"
+repository = "https://github.com/yourorg/cardiovascular-prediction-system"
+documentation = "https://yourorg.github.io/cardiovascular-prediction-system"
+changelog = "https://github.com/yourorg/cardiovascular-prediction-system/blob/main/CHANGELOG.md"
+
+[project.scripts]
+cvd-api = "app.main:main"
+cvd-train = "scripts.train_models:main"
+cvd-predict = "scripts.predict:main"
+cvd-data-sync = "scripts.data_ingestion:main"
+
+[tool.setuptools.packages.find]
+where = ["backend"]
+include = ["app*", "scripts*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.yaml", "*.yml", "*.toml", "*.txt"]
+
+# Black Configuration
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # Exclude directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | migrations
+)/
+'''
+
+# isort Configuration
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["app", "scripts"]
+known_third_party = ["fastapi", "sqlalchemy", "pandas", "sklearn"]
+
+# MyPy Configuration
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+
+# Pytest Configuration
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "--cov=app",
+    "--cov-branch",
+    "--cov-report=term-missing",
+    "--cov-report=html:htmlcov",
+    "--cov-report=xml",
+    "--cov-fail-under=85"
+]
+testpaths = ["backend/tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+    "ml: marks tests as ML model tests",
+    "api: marks tests as API tests",
+]
+filterwarnings = [
+    "error",
+    "ignore::UserWarning",
+    "ignore::DeprecationWarning",
+]
+
+# Coverage Configuration
+[tool.coverage.run]
+source = ["backend/app"]
+omit = [
+    "*/tests/*",
+    "*/migrations/*",
+    "*/venv/*",
+    "*/env/*",
+    "*/__pycache__/*",
+]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+# Bandit Security Linting
+[tool.bandit]
+targets = ["backend/app"]
+exclude_dirs = ["backend/tests", "backend/migrations"]
+skips = ["B101"]  # Skip assert_used test
+
+# Flake8 Configuration (in setup.cfg format since flake8 doesn't support pyproject.toml yet)
+# This would go in setup.cfg file, included here for reference:
+# [flake8]
+# max-line-length = 88
+# extend-ignore = E203, W503, F401
+# exclude = .git,__pycache__,migrations,venv,env,build,dist
+# per-file-ignores =
+#     __init__.py:F401
+#     */migrations/*:E501
