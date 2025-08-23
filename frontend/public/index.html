@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic Meta Tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="theme-color" content="#1976d2" />
+  <meta name="color-scheme" content="light dark" />
+  
+  <!-- Application Information -->
+  <title>Cardiovascular Disease Prediction System</title>
+  <meta name="description" content="Production-ready ML system for predicting cardiovascular disease hospitalization rates among Medicare beneficiaries" />
+  <meta name="keywords" content="cardiovascular, prediction, healthcare, machine learning, Medicare, risk assessment" />
+  <meta name="author" content="ML Engineering Team" />
+  <meta name="version" content="1.0.0" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="%PUBLIC_URL%" />
+  <meta property="og:title" content="Cardiovascular Disease Prediction System" />
+  <meta property="og:description" content="Advanced ML system for predicting cardiovascular disease hospitalization rates" />
+  <meta property="og:image" content="%PUBLIC_URL%/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="CVD Prediction System" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="%PUBLIC_URL%" />
+  <meta property="twitter:title" content="Cardiovascular Disease Prediction System" />
+  <meta property="twitter:description" content="Advanced ML system for predicting cardiovascular disease hospitalization rates" />
+  <meta property="twitter:image" content="%PUBLIC_URL%/twitter-image.png" />
+  
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' data: https:;
+    connect-src 'self' http://localhost:8000 https://api.yourdomain.com;
+    manifest-src 'self';
+    media-src 'self';
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+    frame-ancestors 'none';
+  " />
+  
+  <!-- Preconnect for Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://api.yourdomain.com" />
+  
+  <!-- Fonts -->
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" 
+    rel="stylesheet" 
+  />
+  <link 
+    href="https://fonts.googleapis.com/icon?family=Material+Icons" 
+    rel="stylesheet" 
+  />
+  
+  <!-- Favicons and Icons -->
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png" />
+  <link rel="mask-icon" href="%PUBLIC_URL%/safari-pinned-tab.svg" color="#1976d2" />
+  <meta name="msapplication-TileColor" content="#1976d2" />
+  <meta name="msapplication-config" content="%PUBLIC_URL%/browserconfig.xml" />
+  
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  
+  <!-- Preload Critical Resources -->
+  <link rel="preload" href="%PUBLIC_URL%/static/css/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <link rel="preload" href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZJhiJ-Ek-_EeAmM.woff2" as="font" type="font/woff2" crossorigin />
+  
+  <!-- Critical CSS (inline for performance) -->
+  <style>
+    /* Loading Screen Styles */
+    .app-loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      color: white;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .loading-spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top: 4px solid #ffffff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 24px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .loading-text {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    
+    .loading-subtitle {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+    
+    /* Hide loading screen when React loads */
+    .app-loaded .app-loading {
+      display: none;
+    }
+    
+    /* Reset and Base Styles */
+    * {
+      box-sizing: border-box;
+    }
+    
+    html {
+      height: 100%;
+      font-size: 16px;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Inter', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #333;
+      background-color: #fafafa;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    
+    #root {
+      height: 100%;
+      min-height: 100vh;
+    }
+    
+    /* Focus styles for accessibility */
+    :focus-visible {
+      outline: 2px solid #1976d2;
+      outline-offset: 2px;
+    }
+    
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+      body {
+        filter: contrast(1.2);
+      }
+    }
+    
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    
+    /* Print styles */
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      
+      body {
+        background: white !important;
+        color: black !important;
+      }
+    }
+  </style>
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Cardiovascular Disease Prediction System",
+      "description": "Production-ready ML system for predicting cardiovascular disease hospitalization rates among Medicare beneficiaries",
+      "url": "%PUBLIC_URL%",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Web Browser",
+      "permissions": "Read healthcare data, generate predictions",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "ML Engineering Team"
+      }
+    }
+  </script>
+  
+  <!-- Environment Variables for Client -->
+  <script>
+    window.ENV = {
+      REACT_APP_API_URL: '%REACT_APP_API_URL%',
+      REACT_APP_ENVIRONMENT: '%REACT_APP_ENVIRONMENT%',
+      REACT_APP_VERSION: '%REACT_APP_VERSION%',
+      NODE_ENV: '%NODE_ENV%'
+    };
+  </script>
+  
+  <!-- Feature Detection -->
+  <script>
+    // Detect browser capabilities
+    window.browserCapabilities = {
+      webgl: !!window.WebGLRenderingContext,
+      webgl2: !!window.WebGL2RenderingContext,
+      webWorkers: !!window.Worker,
+      serviceWorkers: 'serviceWorker' in navigator,
+      pushNotifications: 'PushManager' in window,
+      geolocation: 'geolocation' in navigator,
+      localStorage: !!window.localStorage,
+      sessionStorage: !!window.sessionStorage,
+      indexedDB: !!window.indexedDB,
+      fetch: !!window.fetch,
+      formData: !!window.FormData,
+      fileReader: !!window.FileReader,
+      canvas: !!document.createElement('canvas').getContext,
+      touchEvents: 'ontouchstart' in window,
+      pointerEvents: !!window.PointerEvent,
+      darkModeSupported: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+    };
+  </script>
+</head>
+
+<body>
+  <!-- No JavaScript Fallback -->
+  <noscript>
+    <div style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Inter', sans-serif;
+      background: #fafafa;
+      color: #333;
+      text-align: center;
+      padding: 24px;
+    ">
+      <div>
+        <h1 style="color: #d32f2f; margin-bottom: 16px;">
+          ⚠️ JavaScript Required
+        </h1>
+        <p style="margin-bottom: 24px; max-width: 500px;">
+          The Cardiovascular Disease Prediction System requires JavaScript to function properly. 
+          Please enable JavaScript in your browser and refresh the page.
+        </p>
+        <p style="font-size: 14px; color: #666;">
+          If you continue to have issues, please contact your system administrator.
+        </p>
+      </div>
+    </div>
+  </noscript>
+  
+  <!-- App Loading Screen -->
+  <div id="app-loading" class="app-loading">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Cardiovascular Prediction System</div>
+    <div class="loading-subtitle">Loading application...</div>
+  </div>
+  
+  <!-- React App Root -->
+  <div id="root"></div>
+  
+  <!-- Application Scripts -->
+  <script>
+    // Remove loading screen when React is ready
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        const loadingElement = document.getElementById('app-loading');
+        if (loadingElement) {
+          loadingElement.style.opacity = '0';
+          loadingElement.style.transition = 'opacity 0.5s ease-out';
+          setTimeout(() => {
+            loadingElement.remove();
+            document.body.classList.add('app-loaded');
+          }, 500);
+        }
+      }, 1000); // Minimum loading time for UX
+    });
+    
+    // Performance monitoring
+    if (window.performance && window.performance.mark) {
+      window.performance.mark('app-start');
+    }
+    
+    // Global error handling for better debugging
+    window.addEventListener('error', function(e) {
+      console.error('Global Error:', {
+        message: e.message,
+        filename: e.filename,
+        lineno: e.lineno,
+        colno: e.colno,
+        error: e.error,
+        stack: e.error ? e.error.stack : null,
+        userAgent: navigator.userAgent,
+        timestamp: new Date().toISOString(),
+        url: window.location.href
+      });
+    });
+    
+    // Log browser information for debugging
+    console.log('🌐 Browser Info:', {
+      userAgent: navigator.userAgent,
+      language: navigator.language,
+      languages: navigator.languages,
+      platform: navigator.platform,
+      cookieEnabled: navigator.cookieEnabled,
+      onLine: navigator.onLine,
+      hardwareConcurrency: navigator.hardwareConcurrency,
+      deviceMemory: (navigator as any).deviceMemory,
+      connection: (navigator as any).connection ? {
+        effectiveType: (navigator as any).connection.effectiveType,
+        downlink: (navigator as any).connection.downlink,
+        rtt: (navigator as any).connection.rtt
+      } : 'unknown'
+    });
+    
+    // Accessibility support
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('reduce-motion');
+    }
+    
+    if (window.matchMedia('(prefers-contrast: high)').matches) {
+      document.documentElement.classList.add('high-contrast');
+    }
+    
+    // Dark mode detection
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    if (prefersDark.matches) {
+      document.documentElement.classList.add('dark-mode-preferred');
+    }
+    
+    // Listen for dark mode changes
+    prefersDark.addEventListener('change', (e) => {
+      if (e.matches) {
+        document.documentElement.classList.add('dark-mode-preferred');
+      } else {
+        document.documentElement.classList.remove('dark-mode-preferred');
+      }
+    });
+    
+    // Print detection
+    window.addEventListener('beforeprint', function() {
+      document.body.classList.add('printing');
+    });
+    
+    window.addEventListener('afterprint', function() {
+      document.body.classList.remove('printing');
+    });
+    
+    // Network status monitoring
+    window.addEventListener('online', function() {
+      console.log('🌐 Network: Online');
+      document.body.classList.remove('offline');
+      document.body.classList.add('online');
+      
+      // Dispatch custom event for React components
+      window.dispatchEvent(new CustomEvent('network-status', { 
+        detail: { online: true } 
+      }));
+    });
+    
+    window.addEventListener('offline', function() {
+      console.log('📵 Network: Offline');
+      document.body.classList.remove('online');
+      document.body.classList.add('offline');
+      
+      // Dispatch custom event for React components
+      window.dispatchEvent(new CustomEvent('network-status', { 
+        detail: { online: false } 
+      }));
+    });
+    
+    // Set initial network status
+    if (navigator.onLine) {
+      document.body.classList.add('online');
+    } else {
+      document.body.classList.add('offline');
+    }
+    
+    // Memory usage monitoring (if available)
+    if ((performance as any).memory) {
+      console.log('💾 Memory Info:', {
+        used: Math.round((performance as any).memory.usedJSHeapSize / 1048576) + ' MB',
+        total: Math.round((performance as any).memory.totalJSHeapSize / 1048576) + ' MB',
+        limit: Math.round((performance as any).memory.jsHeapSizeLimit / 1048576) + ' MB'
+      });
+    }
+    
+    // Set build information
+    console.log('🏗️ Build Info:', {
+      version: '%REACT_APP_VERSION%',
+      environment: '%REACT_APP_ENVIRONMENT%',
+      buildDate: '%REACT_APP_BUILD_DATE%',
+      nodeEnv: '%NODE_ENV%'
+    });
+  </script>
+  
+  <!-- Polyfills for older browsers -->
+  <script nomodule src="https://cdn.jsdelivr.net/npm/core-js-bundle@3/minified.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/regenerator-runtime@0.13/runtime.min.js"></script>
+  
+  <!-- Analytics (Production Only) -->
+  <script>
+    if ('%NODE_ENV%' === 'production' && '%REACT_APP_GA_TRACKING_ID%') {
+      // Google Analytics 4 setup
+      (function() {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=%REACT_APP_GA_TRACKING_ID%';
+        document.head.appendChild(script);
+        
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', '%REACT_APP_GA_TRACKING_ID%', {
+          send_page_view: false, // We'll handle this in React
+          custom_map: {
+            custom_parameter_1: 'prediction_type',
+            custom_parameter_2: 'model_version'
+          }
+        });
+        
+        window.gtag = gtag;
+      })();
+    }
+  </script>
+  
+  <!-- Development Mode Helpers -->
+  <script>
+    if ('%NODE_ENV%' === 'development') {
+      console.log('🛠️ Development Mode Features:');
+      console.log('  • React Developer Tools');
+      console.log('  • React Query DevTools');
+      console.log('  • Detailed error messages');
+      console.log('  • Performance monitoring');
+      console.log('  • Network request logging');
+      
+      // Add development helper functions to window
+      window.__CVD_DEV_TOOLS__ = {
+        clearCache: function() {
+          localStorage.clear();
+          sessionStorage.clear();
+          console.log('🧹 Cache cleared');
+        },
+        logState: function() {
+          console.log('🔍 Current App State:', window.__REDUX_STORE__?.getState());
+        },
+        simulateError: function() {
+          throw new Error('Simulated error for testing');
+        },
+        checkHealth: function() {
+          fetch('/api/v1/health')
+            .then(r => r.json())
+            .then(data => console.log('🏥 Health Check:', data))
+            .catch(err => console.error('❌ Health Check Failed:', err));
+        }
+      };
+      
+      console.log('🔧 Development tools available at window.__CVD_DEV_TOOLS__');
+    }
+  </script>
+</body>
+</html>
